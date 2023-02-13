@@ -1,0 +1,45 @@
+<div style="align-items: center; display: flex; flex-direction: row; justify-content: space-between; margin: 24px 16px">
+  <div>
+    <button mat-button (click)="filterOddRows()">Odd rows</button>
+    <button mat-button (click)="resetFilter()">Reset</button>
+  </div>
+
+  <app-theme-picker></app-theme-picker>
+</div>
+
+<oo-ngx-list-table [dataSource]="dataSource" [(selection)]="selection">
+  <ng-container columnDef="col1" align="right" pinned="left" [resizable]="true" [sortable]="true" width="10rem">
+    <ng-container *headerCellDef>#</ng-container>
+    <ng-container *cellDef="let item">{{ item.col1 }}</ng-container>
+    <ng-container *footerCellDef>Col1 Footer</ng-container>
+  </ng-container>
+
+  <ng-container columnDef="col2" align="left" [resizable]="true" [sortable]="true" width="50%">
+    <ng-container *headerCellDef>Col2</ng-container>
+    <ng-container *cellDef="let item">{{ item.col2 }}</ng-container>
+    <ng-container *footerCellDef>Col2 Footer</ng-container>
+  </ng-container>
+
+  <ng-container columnDef="col3" align="left" [resizable]="true" [sortable]="true">
+    <ng-container *headerCellDef>Col3</ng-container>
+    <ng-container *cellDef="let item">{{ item.col3 }}</ng-container>
+    <ng-container *footerCellDef>Col3 Footer</ng-container>
+  </ng-container>
+
+  <ng-template tableTemplate="caption">Caption</ng-template>
+
+  <ng-template tableTemplate="controls" let-selection="selection">
+    <button mat-stroked-button [disabled]="dataSource.data.length === 0" *ngIf="selection.length === 0">
+      All rows action
+    </button>
+    <button mat-stroked-button *ngIf="selection.length === 2">Two rows action</button>
+  </ng-template>
+
+  <ng-template tableTemplate="summary">Summary</ng-template>
+
+  <ng-template tableTemplate="rowContextMenu" let-item let-overlay="overlay">
+    <li class="oo-table-menu-item" (click)="overlay.hide(); showRow(item)">Action1</li>
+    <li class="oo-table-menu-item" (click)="overlay.hide(); showRow(item)">Action2</li>
+    <li class="oo-table-menu-item" (click)="overlay.hide(); showRow(item)">Action3</li>
+  </ng-template>
+</oo-ngx-list-table>
